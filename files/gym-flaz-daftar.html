@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daftar Membership — GYM FLAZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#070d14;
+    --navy:#0c1c2e;
+    --navy-2:#122a42;
+    --green:#22e0a0;
+    --blue:#2f8fff;
+    --paper:#eaf3f0;
+    --paper-dim:#9fb4c4;
+    --line:rgba(234,243,240,0.12);
+    --danger:#ff6b6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Work Sans',sans-serif;
+    min-height:100vh;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;letter-spacing:0.02em;text-transform:uppercase;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(7,13,20,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1180px;margin:0 auto;}
+  .logo{font-family:'Anton',sans-serif;font-size:22px;}
+  .logo span{color:var(--green);}
+  .back-link{
+    display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+    letter-spacing:0.04em;text-transform:uppercase;color:var(--paper-dim);
+    transition:color .2s;
+  }
+  .back-link:hover{color:var(--green);}
+
+  /* HERO STRIP */
+  .form-hero{
+    padding:60px 0 20px;
+    text-align:left;
+    opacity:0;animation:fadeUp .7s .05s forwards;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .section-tag{font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .section-tag::before{content:'';width:28px;height:2px;background:var(--green);}
+  .form-hero h1{font-size:clamp(30px,4.5vw,50px);line-height:1.05;max-width:640px;}
+  .form-hero p{margin-top:16px;max-width:520px;color:var(--paper-dim);font-size:15.5px;line-height:1.7;}
+
+  /* PROGRESS */
+  .progress{display:flex;align-items:center;gap:8px;margin:34px 0 8px;opacity:0;animation:fadeUp .7s .15s forwards;}
+  .p-step{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--paper-dim);}
+  .p-dot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:11px;transition:all .3s;}
+  .p-step.active .p-dot{border-color:var(--green);color:var(--green);background:rgba(34,224,160,0.08);}
+  .p-line{width:36px;height:1px;background:var(--line);}
+
+  /* MAIN LAYOUT */
+  .form-layout{
+    display:grid;grid-template-columns:1fr 380px;gap:36px;
+    padding:24px 0 100px;align-items:start;
+  }
+
+  /* PACKAGE PICKER */
+  .field-block{
+    margin-bottom:34px;opacity:0;animation:fadeUp .7s forwards;
+  }
+  .field-block:nth-of-type(1){animation-delay:.2s;}
+  .field-block:nth-of-type(2){animation-delay:.28s;}
+  .field-block:nth-of-type(3){animation-delay:.36s;}
+  .field-block h3{
+    font-family:'Work Sans',sans-serif;font-weight:700;font-size:14px;text-transform:none;
+    letter-spacing:0;color:var(--paper);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .field-block h3 .num{
+    width:24px;height:24px;border-radius:50%;background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-family:'Anton',sans-serif;font-size:12px;display:flex;align-items:center;justify-content:center;
+  }
+
+  .plan-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .plan-card{
+    border:1px solid var(--line);border-radius:4px;padding:18px 14px;background:var(--navy);
+    cursor:pointer;transition:border-color .25s, background .25s, transform .25s;
+    position:relative;
+  }
+  .plan-card:hover{transform:translateY(-3px);border-color:rgba(34,224,160,0.4);}
+  .plan-card.selected{border-color:var(--green);background:linear-gradient(160deg, rgba(34,224,160,0.1), rgba(47,143,255,0.06));}
+  .plan-card .pc-tier{font-size:10.5px;color:var(--paper-dim);text-transform:uppercase;letter-spacing:0.08em;}
+  .plan-card .pc-name{font-family:'Anton',sans-serif;font-size:19px;margin:4px 0;}
+  .plan-card .pc-price{font-size:13px;color:var(--green);font-weight:700;}
+  .plan-card .pc-check{
+    position:absolute;top:12px;right:12px;width:16px;height:16px;border-radius:50%;
+    border:1px solid var(--line);transition:all .25s;
+  }
+  .plan-card.selected .pc-check{background:var(--green);border-color:var(--green);}
+
+  /* TEXT FIELDS */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  label{display:block;font-size:12.5px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:8px;}
+  .input-row{margin-bottom:18px;}
+  input[type=text], input[type=email], input[type=tel], input[type=date], select, textarea{
+    width:100%;padding:14px 16px;background:var(--navy);border:1px solid var(--line);border-radius:3px;
+    color:var(--paper);font-family:'Work Sans',sans-serif;font-size:14.5px;
+    transition:border-color .25s, background .25s;
+  }
+  textarea{resize:vertical;min-height:90px;}
+  input::placeholder, textarea::placeholder{color:#5c7285;}
+  input:focus, select:focus, textarea:focus{outline:none;border-color:var(--green);background:var(--navy-2);}
+  select{appearance:none;background-image:linear-gradient(45deg, transparent 50%, var(--paper-dim) 50%), linear-gradient(135deg, var(--paper-dim) 50%, transparent 50%);background-position:calc(100% - 20px) center, calc(100% - 15px) center;background-size:5px 5px, 5px 5px;background-repeat:no-repeat;}
+
+  .radio-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .radio-chip{
+    padding:10px 18px;border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:600;
+    cursor:pointer;transition:all .2s;color:var(--paper-dim);
+  }
+  .radio-chip.selected{border-color:var(--green);color:var(--green);background:rgba(34,224,160,0.08);}
+
+  .submit-btn{
+    width:100%;padding:17px;border:none;border-radius:3px;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-weight:800;font-size:14.5px;letter-spacing:0.04em;text-transform:uppercase;
+    transition:transform .25s, box-shadow .25s;margin-top:8px;
+  }
+  .submit-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(34,224,160,0.3);}
+  .fine-print{margin-top:14px;font-size:12px;color:var(--paper-dim);text-align:center;line-height:1.6;}
+
+  /* SUMMARY SIDEBAR */
+  .summary{
+    position:sticky;top:100px;
+    border:1px solid var(--line);border-radius:6px;background:var(--navy);
+    overflow:hidden;opacity:0;animation:fadeUp .7s .25s forwards;
+  }
+  .summary-head{
+    padding:26px 26px 20px;
+    background:linear-gradient(160deg, rgba(34,224,160,0.1), rgba(47,143,255,0.08));
+    border-bottom:1px solid var(--line);
+  }
+  .summary-head .s-tier{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--paper-dim);}
+  .summary-head .s-name{font-family:'Anton',sans-serif;font-size:30px;margin:4px 0 2px;transition:opacity .2s;}
+  .summary-head .s-tagline{font-size:13px;color:var(--paper-dim);}
+  .summary-body{padding:22px 26px;}
+  .s-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:20px;}
+  .s-price-row .s-amt{font-family:'Anton',sans-serif;font-size:32px;transition:opacity .2s;}
+  .s-price-row .s-per{font-size:12px;color:var(--paper-dim);}
+  .summary-body ul{list-style:none;margin-bottom:22px;}
+  .summary-body li{
+    display:flex;gap:10px;font-size:13px;line-height:1.55;padding:9px 0;border-top:1px solid var(--line);color:var(--paper);
+  }
+  .summary-body li:first-child{border-top:none;}
+  .summary-body li .tick{color:var(--green);font-weight:800;flex-shrink:0;}
+  .summary-note{
+    background:var(--ink);border:1px dashed var(--line);border-radius:4px;padding:14px 16px;
+    font-size:12px;color:var(--paper-dim);line-height:1.6;
+  }
+
+  /* SUCCESS OVERLAY */
+  .success-overlay{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(7,13,20,0.92);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+  }
+  .success-overlay.show{opacity:1;pointer-events:all;}
+  .success-card{
+    background:var(--navy);border:1px solid var(--line);border-radius:8px;
+    padding:52px 44px;max-width:440px;width:90%;text-align:center;
+    transform:translateY(20px) scale(0.96);opacity:0;transition:all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .success-overlay.show .success-card{transform:translateY(0) scale(1);opacity:1;}
+  .check-wrap{
+    width:76px;height:76px;border-radius:50%;margin:0 auto 26px;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .check-wrap svg{width:36px;height:36px;}
+  .check-wrap svg path{
+    stroke:var(--ink);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:40;stroke-dashoffset:40;
+    animation:drawCheck .5s .3s forwards;
+  }
+  @keyframes drawCheck{to{stroke-dashoffset:0;}}
+  .success-card h2{font-size:26px;margin-bottom:12px;}
+  .success-card p{font-size:14px;color:var(--paper-dim);line-height:1.7;margin-bottom:30px;}
+  .success-card .s-ref{
+    font-size:12px;color:var(--green);letter-spacing:0.05em;margin-bottom:24px;
+    border:1px solid var(--line);border-radius:20px;padding:7px 16px;display:inline-block;
+  }
+  .success-actions{display:flex;flex-direction:column;gap:10px;}
+  .success-actions a{
+    padding:14px;border-radius:3px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.03em;
+  }
+  .success-actions .primary{background:linear-gradient(90deg,var(--green),var(--blue));color:var(--ink);}
+  .success-actions .ghost{border:1px solid var(--line);color:var(--paper);}
+
+  @media (max-width:980px){
+    .form-layout{grid-template-columns:1fr;}
+    .summary{position:static;}
+    .plan-picker{grid-template-columns:repeat(2,1fr);}
+    .grid-2{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important;transition-duration:0.01ms !important;}
+  }
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">GYM <span>FLAZ</span></div>
+    <a href="gym-flaz-landing.html" class="back-link">&larr; Kembali ke Beranda</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="form-hero">
+    <div class="section-tag">Pendaftaran Member</div>
+    <h1>Satu Langkah Lagi Menuju Level Barumu</h1>
+    <p>Isi data di bawah ini. Tim GYM FLAZ akan menghubungimu lewat WhatsApp untuk konfirmasi jadwal dan pembayaran.</p>
+  </div>
+
+  <div class="progress">
+    <div class="p-step active"><div class="p-dot">1</div>Pilih Paket</div>
+    <div class="p-line"></div>
+    <div class="p-step active"><div class="p-dot">2</div>Data Diri</div>
+    <div class="p-line"></div>
+    <div class="p-step"><div class="p-dot">3</div>Konfirmasi</div>
+  </div>
+
+  <form class="form-layout" id="daftarForm">
+    <div>
+
+      <div class="field-block">
+        <h3><span class="num">1</span>Pilih Paket Membership</h3>
+        <div class="plan-picker" id="planPicker">
+          <div class="plan-card" data-plan="bronze">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 01</div>
+            <div class="pc-name">Bronze</div>
+            <div class="pc-price">Rp300k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="silver">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 02</div>
+            <div class="pc-name">Silver</div>
+            <div class="pc-price">Rp800k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="gold">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 03</div>
+            <div class="pc-name">Gold</div>
+            <div class="pc-price">Rp1.800k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="platinum">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 04</div>
+            <div class="pc-name">Platinum</div>
+            <div class="pc-price">Rp2.800k/bln</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <h3><span class="num">2</span>Data Diri</h3>
+
+        <div class="grid-2">
+          <div class="input-row">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="cth. Ade Fikri" required>
+          </div>
+          <div class="input-row">
+            <label for="tgl">Tanggal Lahir</label>
+            <input type="date" id="tgl" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="input-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="cth. nama@email.com" required>
+          </div>
+          <div class="input-row">
+            <label for="hp">Nomor WhatsApp</label>
+            <input type="tel" id="hp" placeholder="cth. 0812xxxxxxx" required>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label>Jenis Kelamin</label>
+          <div class="radio-row" id="genderRow">
+            <div class="radio-chip" data-gender="Pria">Pria</div>
+            <div class="radio-chip" data-gender="Wanita">Wanita</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label for="mulai">Tanggal Mulai Latihan</label>
+          <input type="date" id="mulai" required>
+        </div>
+
+        <div class="input-row">
+          <label for="tujuan">Tujuan Latihan (opsional)</label>
+          <select id="tujuan">
+            <option value="">Pilih tujuan utamamu</option>
+            <option>Menurunkan berat badan</option>
+            <option>Membentuk otot</option>
+            <option>Meningkatkan stamina</option>
+            <option>Persiapan kompetisi</option>
+            <option>Sekadar menjaga kebugaran</option>
+          </select>
+        </div>
+
+        <div class="input-row">
+          <label for="catatan">Catatan Tambahan (opsional)</label>
+          <textarea id="catatan" placeholder="Riwayat cedera, jadwal yang diinginkan, atau hal lain yang perlu kami tahu"></textarea>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <h3><span class="num">3</span>Metode Pembayaran</h3>
+        <div class="radio-row" id="paymentRow">
+          <div class="radio-chip" data-pay="Transfer Bank">Transfer Bank</div>
+          <div class="radio-chip" data-pay="QRIS">QRIS</div>
+          <div class="radio-chip" data-pay="Kartu Debit/Kredit">Kartu Debit/Kredit</div>
+          <div class="radio-chip" data-pay="Bayar di Tempat">Bayar di Tempat</div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Konfirmasi Pendaftaran</button>
+      <p class="fine-print">Dengan mendaftar, kamu setuju dihubungi tim GYM FLAZ melalui WhatsApp/Email untuk proses aktivasi membership.</p>
+    </div>
+
+    <aside class="summary">
+      <div class="summary-head">
+        <div class="s-tier" id="sumTier">Level 04</div>
+        <div class="s-name" id="sumName">Platinum</div>
+        <div class="s-tagline" id="sumTagline">Kuasai batas dirimu</div>
+      </div>
+      <div class="summary-body">
+        <div class="s-price-row">
+          <span class="s-amt" id="sumPrice">Rp2.800k</span>
+          <span class="s-per">/bulan</span>
+        </div>
+        <ul id="sumBenefits"></ul>
+        <div class="summary-note">Tagihan pertama diproses setelah tim kami mengonfirmasi jadwal onboarding via WhatsApp.</div>
+      </div>
+    </aside>
+  </form>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6"/></svg>
+    </div>
+    <h2>Pendaftaran Berhasil!</h2>
+    <p>Terima kasih sudah bergabung dengan GYM FLAZ. Tim kami akan menghubungimu lewat WhatsApp dalam 1x24 jam untuk konfirmasi jadwal dan pembayaran.</p>
+    <div class="s-ref" id="refCode">Kode Referensi: GF-000000</div>
+    <div class="success-actions">
+      <a href="gym-flaz-landing.html" class="primary">Kembali ke Beranda</a>
+      <a href="#" class="ghost" id="closeSuccess">Tutup</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const plans = {
+    bronze:   { tier:'Level 01', name:'Bronze',   tagline:'Mulai langkah pertamamu', price:'Rp300k',
+      benefits:['Akses gym reguler di jam operasional standar','Alat-alat gym dasar lengkap','Tanpa pendampingan trainer pribadi','Cocok untuk pemula yang baru memulai'] },
+    silver:   { tier:'Level 02', name:'Silver',   tagline:'Bangun kebiasaan latihan', price:'Rp800k',
+      benefits:['Akses gym tanpa batas jam operasional','Kelas grup (yoga, zumba, HIIT) 2x per minggu','Evaluasi progress bulanan','Akses loker & shower premium'] },
+    gold:     { tier:'Level 03', name:'Gold',     tagline:'Tingkatkan performa latihan', price:'Rp1.800k',
+      benefits:['Personal trainer 3x per minggu','Akses unlimited seluruh alat gym','Program latihan terstruktur & terukur tiap bulan','Konsultasi nutrisi dasar bersama ahli gizi'] },
+    platinum: { tier:'Level 04', name:'Platinum', tagline:'Kuasai batas dirimu', price:'Rp2.800k',
+      benefits:['Dilatih oleh trainer profesional berpengalaman','Pemakaian bebas alat gym unlimited','Diawasi ketat untuk pembentukan & fokus latihan yang diinginkan','Siap dihubungi 24 jam apabila terjadi sesuatu'] }
+  };
+
+  const planCards = document.querySelectorAll('.plan-card');
+  const sumTier = document.getElementById('sumTier');
+  const sumName = document.getElementById('sumName');
+  const sumTagline = document.getElementById('sumTagline');
+  const sumPrice = document.getElementById('sumPrice');
+  const sumBenefits = document.getElementById('sumBenefits');
+
+  function renderSummary(key){
+    const p = plans[key];
+    [sumTier, sumName, sumTagline, sumPrice].forEach(el => el.style.opacity = 0);
+    setTimeout(() => {
+      sumTier.textContent = p.tier;
+      sumName.textContent = p.name;
+      sumTagline.textContent = p.tagline;
+      sumPrice.textContent = p.price;
+      sumBenefits.innerHTML = p.benefits.map(b => `<li><span class="tick">+</span>${b}</li>`).join('');
+      [sumTier, sumName, sumTagline, sumPrice].forEach(el => el.style.opacity = 1);
+    }, 120);
+  }
+
+  function selectPlan(key){
+    planCards.forEach(c => c.classList.toggle('selected', c.dataset.plan === key));
+    renderSummary(key);
+  }
+
+  planCards.forEach(card => {
+    card.addEventListener('click', () => selectPlan(card.dataset.plan));
+  });
+
+  // preselect from URL ?paket=gold, default platinum
+  const params = new URLSearchParams(window.location.search);
+  const initial = params.get('paket');
+  selectPlan(plans[initial] ? initial : 'platinum');
+
+  // simple radio-chip groups
+  function setupChipGroup(rowId, attr){
+    const row = document.getElementById(rowId);
+    row.querySelectorAll('.radio-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        row.querySelectorAll('.radio-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      });
+    });
+  }
+  setupChipGroup('genderRow', 'gender');
+  setupChipGroup('paymentRow', 'pay');
+
+  // form submit -> success overlay (no real backend, simulated)
+  const form = document.getElementById('daftarForm');
+  const overlay = document.getElementById('successOverlay');
+  const refCode = document.getElementById('refCode');
+  const closeSuccess = document.getElementById('closeSuccess');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = 'GF-' + Math.floor(100000 + Math.random()*900000);
+    refCode.textContent = 'Kode Referensi: ' + code;
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+
+  closeSuccess.addEventListener('click', (e) => {
+    e.preventDefault();
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  });
+</script>
+
+</body>
+</html>
