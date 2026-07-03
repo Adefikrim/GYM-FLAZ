@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GYM FLAZ — Bentuk. Fokus. Taklukkan.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#070d14;
+    --navy:#0c1c2e;
+    --navy-2:#122a42;
+    --green:#22e0a0;
+    --green-dim:#1a9f75;
+    --blue:#2f8fff;
+    --blue-dim:#1c5fb0;
+    --paper:#eaf3f0;
+    --paper-dim:#9fb4c4;
+    --line:rgba(234,243,240,0.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Work Sans',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* ================= LANDING PAGE ================= */
+
+  /* ---------- NAV ---------- */
+  #page-landing header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(7,13,20,0.7);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1180px;margin:0 auto;}
+  .logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.03em;}
+  .logo span{color:var(--green);}
+  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:600;letter-spacing:0.03em;}
+  .nav-links a{opacity:0.8;transition:opacity .25s, color .25s;position:relative;}
+  .nav-links a:hover{opacity:1;color:var(--green);}
+  .nav-cta{
+    padding:10px 22px;border-radius:2px;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-weight:800;font-size:13px;letter-spacing:0.04em;
+    text-transform:uppercase;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,224,160,0.35);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:90px;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+    z-index:0;
+  }
+  .hero-bg::after{
+    content:'';position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(7,13,20,0.55) 0%, rgba(7,13,20,0.75) 55%, var(--ink) 100%),
+      linear-gradient(100deg, rgba(12,28,46,0.9) 0%, rgba(34,224,160,0.08) 45%, rgba(47,143,255,0.12) 100%);
+  }
+  .hero-content{position:relative;z-index:2;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--green);margin-bottom:22px;
+    opacity:0;animation:fadeUp .8s .1s forwards;
+  }
+  .eyebrow::before{content:'';width:28px;height:2px;background:var(--green);}
+  .hero h1{
+    font-size:clamp(48px,8vw,104px);
+    line-height:0.95;
+    max-width:900px;
+    opacity:0;animation:fadeUp .9s .25s forwards;
+  }
+  .hero h1 .line2{
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{
+    margin-top:26px;max-width:520px;font-size:17px;line-height:1.7;color:var(--paper-dim);
+    opacity:0;animation:fadeUp .9s .4s forwards;
+  }
+  .hero-actions{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s .55s forwards;}
+  .btn-primary{
+    padding:16px 34px;background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-weight:800;font-size:14px;letter-spacing:0.04em;text-transform:uppercase;
+    border-radius:2px;transition:transform .25s, box-shadow .25s;display:inline-block;border:none;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(34,224,160,0.3);}
+  .btn-ghost{
+    padding:16px 34px;border:1px solid var(--line);color:var(--paper);
+    font-weight:700;font-size:14px;letter-spacing:0.04em;text-transform:uppercase;
+    border-radius:2px;transition:border-color .25s, background .25s;
+  }
+  .btn-ghost:hover{border-color:var(--green);background:rgba(34,224,160,0.06);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+  .scroll-cue{
+    position:absolute;bottom:36px;left:24px;z-index:2;
+    display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:0.1em;
+    color:var(--paper-dim);text-transform:uppercase;
+  }
+  .scroll-cue .bar{width:1px;height:40px;background:linear-gradient(var(--green),transparent);position:relative;overflow:hidden;}
+  .scroll-cue .bar::after{content:'';position:absolute;top:-40px;left:0;width:100%;height:40px;background:var(--green);animation:scrollDown 1.8s infinite;}
+  @keyframes scrollDown{to{top:40px;}}
+
+  /* ---------- STATS ---------- */
+  .stats{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--navy);
+  }
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);}
+  .stat{
+    padding:44px 24px;text-align:center;border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .num{font-family:'Anton',sans-serif;font-size:44px;background:linear-gradient(90deg,var(--green),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat .label{margin-top:6px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--paper-dim);}
+
+  /* ---------- SECTION SHARED ---------- */
+  #page-landing section{padding:120px 0;}
+  .section-head{max-width:640px;margin-bottom:64px;}
+  .section-tag{font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .section-tag::before{content:'';width:28px;height:2px;background:var(--green);}
+  .section-head h2{font-size:clamp(32px,4.5vw,54px);line-height:1.05;}
+  .section-head p{margin-top:18px;color:var(--paper-dim);font-size:16px;line-height:1.7;}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- WHY / FEATURES ---------- */
+  .features{
+    background:var(--navy);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .feature{background:var(--navy);padding:40px 32px;transition:background .3s;}
+  .feature:hover{background:var(--navy-2);}
+  .feature .fi{
+    width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--green);color:var(--green);
+    display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:16px;
+    margin-bottom:22px;
+  }
+  .feature h3{font-family:'Work Sans',sans-serif;font-weight:700;font-size:18px;text-transform:none;letter-spacing:0;margin-bottom:10px;}
+  .feature p{color:var(--paper-dim);font-size:14.5px;line-height:1.6;}
+
+  /* ---------- TIER STAIRCASE (signature) ---------- */
+  .staircase-section{position:relative;}
+  .staircase{display:flex;align-items:flex-end;gap:18px;height:220px;margin-bottom:70px;}
+  .stair{
+    flex:1;border-radius:3px 3px 0 0;position:relative;
+    background:linear-gradient(180deg, var(--navy-2), var(--navy));
+    border:1px solid var(--line);border-bottom:none;
+    display:flex;align-items:flex-start;justify-content:center;padding-top:14px;
+    font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--paper-dim);
+    transform-origin:bottom;transform:scaleY(0);transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .staircase.in .stair{transform:scaleY(1);}
+  .stair.s1{height:35%;transition-delay:.05s;}
+  .stair.s2{height:58%;transition-delay:.18s;}
+  .stair.s3{height:80%;transition-delay:.31s;}
+  .stair.s4{height:100%;transition-delay:.44s;background:linear-gradient(180deg, rgba(34,224,160,0.18), rgba(47,143,255,0.1));border-color:var(--green);color:var(--green);font-weight:700;}
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .plan{
+    border:1px solid var(--line);border-radius:4px;
+    background:var(--navy);
+    padding:36px 26px;
+    display:flex;flex-direction:column;
+    transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .plan:hover{transform:translateY(-10px);border-color:rgba(34,224,160,0.4);box-shadow:0 20px 45px rgba(0,0,0,0.4);}
+  .plan.featured{
+    background:linear-gradient(160deg, rgba(34,224,160,0.1), rgba(47,143,255,0.08));
+    border-color:var(--green);
+    position:relative;
+  }
+  .plan.featured::before{
+    content:'Paling Diminati';
+    position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;
+    padding:6px 16px;border-radius:20px;
+  }
+  .plan-tier{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:6px;}
+  .plan-name{font-family:'Anton',sans-serif;font-size:26px;margin-bottom:4px;}
+  .plan-tagline{font-size:13px;color:var(--paper-dim);margin-bottom:22px;}
+  .plan-price{display:flex;align-items:baseline;gap:6px;margin-bottom:26px;}
+  .plan-price .amt{font-family:'Anton',sans-serif;font-size:34px;}
+  .plan-price .per{font-size:12px;color:var(--paper-dim);}
+  .plan ul{list-style:none;flex:1;margin-bottom:28px;}
+  .plan li{
+    display:flex;gap:10px;font-size:13.5px;line-height:1.5;color:var(--paper);
+    padding:10px 0;border-top:1px solid var(--line);
+  }
+  .plan li:first-child{border-top:none;}
+  .plan li .tick{color:var(--green);flex-shrink:0;font-weight:800;}
+  .plan.featured li .tick{color:var(--green);}
+  .plan-btn{
+    text-align:center;padding:13px;border-radius:2px;font-weight:800;font-size:13px;
+    letter-spacing:0.04em;text-transform:uppercase;border:1px solid var(--line);
+    transition:all .25s;display:block;background:none;color:var(--paper);width:100%;
+  }
+  .plan-btn:hover{border-color:var(--green);color:var(--green);}
+  .plan.featured .plan-btn{background:linear-gradient(90deg,var(--green),var(--blue));color:var(--ink);border:none;}
+  .plan.featured .plan-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(34,224,160,0.3);}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--navy);
+  }
+  .gallery-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:220px 220px;gap:14px;}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;border-radius:4px;filter:saturate(0.9) contrast(1.05);transition:transform .5s ease, filter .5s ease;}
+  .gcell{overflow:hidden;border-radius:4px;position:relative;}
+  .gcell:nth-child(1){grid-row:1 / span 2;}
+  .gcell:hover img{transform:scale(1.08);filter:saturate(1.1) contrast(1.1);}
+  .gcell::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg, rgba(7,13,20,0.55), transparent 45%);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .testi{
+    border:1px solid var(--line);border-radius:4px;padding:32px;background:var(--navy);
+    transition:border-color .3s, transform .3s;
+  }
+  .testi:hover{border-color:var(--blue);transform:translateY(-6px);}
+  .testi .quote{color:var(--green);font-family:'Anton',sans-serif;font-size:34px;line-height:0;display:block;margin-bottom:12px;}
+  .testi p{font-size:14.5px;line-height:1.7;color:var(--paper);margin-bottom:22px;}
+  .testi-person{display:flex;align-items:center;gap:12px;}
+  .testi-person img{width:42px;height:42px;border-radius:50%;object-fit:cover;}
+  .testi-person .name{font-weight:700;font-size:14px;}
+  .testi-person .role{font-size:12px;color:var(--paper-dim);}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    position:relative;text-align:center;overflow:hidden;
+    background:linear-gradient(140deg, var(--navy) 0%, var(--navy-2) 100%);
+    border-top:1px solid var(--line);
+  }
+  .cta::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(34,224,160,0.16), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(47,143,255,0.18), transparent 45%);
+  }
+  .cta-inner{position:relative;z-index:1;}
+  .cta h2{font-size:clamp(34px,6vw,66px);max-width:760px;margin:0 auto 22px;line-height:1.05;}
+  .cta p{color:var(--paper-dim);max-width:500px;margin:0 auto 38px;font-size:16px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);border-top:1px solid var(--line);padding:60px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  .footer-logo{font-family:'Anton',sans-serif;font-size:24px;margin-bottom:14px;}
+  .footer-logo span{color:var(--green);}
+  footer p.desc{color:var(--paper-dim);font-size:14px;line-height:1.7;max-width:280px;}
+  .fcol h4{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:18px;color:var(--paper-dim);}
+  .fcol a{display:block;font-size:14px;margin-bottom:12px;color:var(--paper);opacity:0.85;transition:opacity .2s, color .2s;}
+  .fcol a:hover{opacity:1;color:var(--green);}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--paper-dim);flex-wrap:wrap;gap:10px;}
+
+  @media (max-width:980px){
+    .stats .wrap{grid-template-columns:repeat(2,1fr);}
+    .stat{border-right:1px solid var(--line);}
+    .stat:nth-child(2n){border-right:none;}
+    .feature-grid{grid-template-columns:1fr;}
+    .pricing-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:180px 180px 180px;}
+    .gcell:nth-child(1){grid-row:auto;grid-column:1 / span 2;}
+    .testi-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .nav-links{display:none;}
+  }
+  @media (max-width:620px){
+    .pricing-grid{grid-template-columns:1fr;}
+    .stats .wrap{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+
+  /* ================= HALAMAN PENDAFTARAN ================= */
+
+  #page-daftar{display:none;}
+  #page-daftar header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(7,13,20,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .back-link{
+    display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;
+    letter-spacing:0.04em;text-transform:uppercase;color:var(--paper-dim);
+    transition:color .2s;background:none;border:none;
+  }
+  .back-link:hover{color:var(--green);}
+
+  .form-hero{padding:60px 0 20px;text-align:left;opacity:0;animation:fadeUp .7s .05s forwards;}
+  .form-hero h1{font-size:clamp(30px,4.5vw,50px);line-height:1.05;max-width:640px;}
+  .form-hero p{margin-top:16px;max-width:520px;color:var(--paper-dim);font-size:15.5px;line-height:1.7;}
+
+  .progress{display:flex;align-items:center;gap:8px;margin:34px 0 8px;opacity:0;animation:fadeUp .7s .15s forwards;}
+  .p-step{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--paper-dim);}
+  .p-dot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:11px;transition:all .3s;}
+  .p-step.active .p-dot{border-color:var(--green);color:var(--green);background:rgba(34,224,160,0.08);}
+  .p-line{width:36px;height:1px;background:var(--line);}
+
+  .form-layout{
+    display:grid;grid-template-columns:1fr 380px;gap:36px;
+    padding:24px 0 100px;align-items:start;
+  }
+
+  .field-block{margin-bottom:34px;opacity:0;animation:fadeUp .7s forwards;}
+  .field-block:nth-of-type(1){animation-delay:.2s;}
+  .field-block:nth-of-type(2){animation-delay:.28s;}
+  .field-block:nth-of-type(3){animation-delay:.36s;}
+  .field-block h3{
+    font-family:'Work Sans',sans-serif;font-weight:700;font-size:14px;text-transform:none;
+    letter-spacing:0;color:var(--paper);margin-bottom:16px;display:flex;align-items:center;gap:10px;
+  }
+  .field-block h3 .num{
+    width:24px;height:24px;border-radius:50%;background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-family:'Anton',sans-serif;font-size:12px;display:flex;align-items:center;justify-content:center;
+  }
+
+  .plan-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .plan-card{
+    border:1px solid var(--line);border-radius:4px;padding:18px 14px;background:var(--navy);
+    cursor:pointer;transition:border-color .25s, background .25s, transform .25s;
+    position:relative;
+  }
+  .plan-card:hover{transform:translateY(-3px);border-color:rgba(34,224,160,0.4);}
+  .plan-card.selected{border-color:var(--green);background:linear-gradient(160deg, rgba(34,224,160,0.1), rgba(47,143,255,0.06));}
+  .plan-card .pc-tier{font-size:10.5px;color:var(--paper-dim);text-transform:uppercase;letter-spacing:0.08em;}
+  .plan-card .pc-name{font-family:'Anton',sans-serif;font-size:19px;margin:4px 0;}
+  .plan-card .pc-price{font-size:13px;color:var(--green);font-weight:700;}
+  .plan-card .pc-check{
+    position:absolute;top:12px;right:12px;width:16px;height:16px;border-radius:50%;
+    border:1px solid var(--line);transition:all .25s;
+  }
+  .plan-card.selected .pc-check{background:var(--green);border-color:var(--green);}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  #page-daftar label{display:block;font-size:12.5px;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:8px;}
+  .input-row{margin-bottom:18px;}
+  #page-daftar input[type=text], #page-daftar input[type=email], #page-daftar input[type=tel], #page-daftar input[type=date], #page-daftar select, #page-daftar textarea{
+    width:100%;padding:14px 16px;background:var(--navy);border:1px solid var(--line);border-radius:3px;
+    color:var(--paper);font-family:'Work Sans',sans-serif;font-size:14.5px;
+    transition:border-color .25s, background .25s;
+  }
+  #page-daftar textarea{resize:vertical;min-height:90px;}
+  #page-daftar input::placeholder, #page-daftar textarea::placeholder{color:#5c7285;}
+  #page-daftar input:focus, #page-daftar select:focus, #page-daftar textarea:focus{outline:none;border-color:var(--green);background:var(--navy-2);}
+  #page-daftar select{appearance:none;background-image:linear-gradient(45deg, transparent 50%, var(--paper-dim) 50%), linear-gradient(135deg, var(--paper-dim) 50%, transparent 50%);background-position:calc(100% - 20px) center, calc(100% - 15px) center;background-size:5px 5px, 5px 5px;background-repeat:no-repeat;}
+
+  .radio-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .radio-chip{
+    padding:10px 18px;border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:600;
+    cursor:pointer;transition:all .2s;color:var(--paper-dim);
+  }
+  .radio-chip.selected{border-color:var(--green);color:var(--green);background:rgba(34,224,160,0.08);}
+
+  .submit-btn{
+    width:100%;padding:17px;border:none;border-radius:3px;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    color:var(--ink);font-weight:800;font-size:14.5px;letter-spacing:0.04em;text-transform:uppercase;
+    transition:transform .25s, box-shadow .25s;margin-top:8px;
+  }
+  .submit-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(34,224,160,0.3);}
+  .fine-print{margin-top:14px;font-size:12px;color:var(--paper-dim);text-align:center;line-height:1.6;}
+
+  .summary{
+    position:sticky;top:100px;
+    border:1px solid var(--line);border-radius:6px;background:var(--navy);
+    overflow:hidden;opacity:0;animation:fadeUp .7s .25s forwards;
+  }
+  .summary-head{
+    padding:26px 26px 20px;
+    background:linear-gradient(160deg, rgba(34,224,160,0.1), rgba(47,143,255,0.08));
+    border-bottom:1px solid var(--line);
+  }
+  .summary-head .s-tier{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--paper-dim);}
+  .summary-head .s-name{font-family:'Anton',sans-serif;font-size:30px;margin:4px 0 2px;transition:opacity .2s;}
+  .summary-head .s-tagline{font-size:13px;color:var(--paper-dim);}
+  .summary-body{padding:22px 26px;}
+  .s-price-row{display:flex;align-items:baseline;gap:6px;margin-bottom:20px;}
+  .s-price-row .s-amt{font-family:'Anton',sans-serif;font-size:32px;transition:opacity .2s;}
+  .s-price-row .s-per{font-size:12px;color:var(--paper-dim);}
+  .summary-body ul{list-style:none;margin-bottom:22px;}
+  .summary-body li{
+    display:flex;gap:10px;font-size:13px;line-height:1.55;padding:9px 0;border-top:1px solid var(--line);color:var(--paper);
+  }
+  .summary-body li:first-child{border-top:none;}
+  .summary-body li .tick{color:var(--green);font-weight:800;flex-shrink:0;}
+  .summary-note{
+    background:var(--ink);border:1px dashed var(--line);border-radius:4px;padding:14px 16px;
+    font-size:12px;color:var(--paper-dim);line-height:1.6;
+  }
+
+  .success-overlay{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(7,13,20,0.92);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+  }
+  .success-overlay.show{opacity:1;pointer-events:all;}
+  .success-card{
+    background:var(--navy);border:1px solid var(--line);border-radius:8px;
+    padding:52px 44px;max-width:440px;width:90%;text-align:center;
+    transform:translateY(20px) scale(0.96);opacity:0;transition:all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .success-overlay.show .success-card{transform:translateY(0) scale(1);opacity:1;}
+  .check-wrap{
+    width:76px;height:76px;border-radius:50%;margin:0 auto 26px;
+    background:linear-gradient(90deg,var(--green),var(--blue));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .check-wrap svg{width:36px;height:36px;}
+  .check-wrap svg path{
+    stroke:var(--ink);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:40;stroke-dashoffset:40;
+    animation:drawCheck .5s .3s forwards;
+  }
+  @keyframes drawCheck{to{stroke-dashoffset:0;}}
+  .success-card h2{font-size:26px;margin-bottom:12px;}
+  .success-card p{font-size:14px;color:var(--paper-dim);line-height:1.7;margin-bottom:30px;}
+  .success-card .s-ref{
+    font-size:12px;color:var(--green);letter-spacing:0.05em;margin-bottom:24px;
+    border:1px solid var(--line);border-radius:20px;padding:7px 16px;display:inline-block;
+  }
+  .success-actions{display:flex;flex-direction:column;gap:10px;}
+  .success-actions a, .success-actions button{
+    padding:14px;border-radius:3px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.03em;width:100%;
+  }
+  .success-actions .primary{background:linear-gradient(90deg,var(--green),var(--blue));color:var(--ink);border:none;}
+  .success-actions .ghost{border:1px solid var(--line);color:var(--paper);background:none;}
+
+  @media (max-width:980px){
+    .form-layout{grid-template-columns:1fr;}
+    .summary{position:static;}
+    .plan-picker{grid-template-columns:repeat(2,1fr);}
+    .grid-2{grid-template-columns:1fr;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<!-- ================= HALAMAN 1: LANDING PAGE ================= -->
+<div id="page-landing">
+
+<header>
+  <nav>
+    <div class="logo">GYM <span>FLAZ</span></div>
+    <div class="nav-links">
+      <a href="#kenapa">Kenapa Kami</a>
+      <a href="#paket">Paket</a>
+      <a href="#fasilitas">Fasilitas</a>
+      <a href="#testimoni">Testimoni</a>
+    </div>
+    <a href="#" class="nav-cta" onclick="goToDaftar(); return false;">Gabung Sekarang</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-content">
+    <div class="eyebrow">Studio Kekuatan &middot; Est. Untukmu yang Serius</div>
+    <h1>BENTUK TUBUH,<br><span class="line2">TAKLUKKAN BATAS.</span></h1>
+    <p>GYM FLAZ adalah tempat latihan bagi mereka yang tidak setengah-setengah. Empat jalur membership, satu tujuan: versi terbaik dirimu.</p>
+    <div class="hero-actions">
+      <a href="#paket" class="btn-primary">Lihat Paket Membership</a>
+      <a href="#kenapa" class="btn-ghost">Kenapa GYM FLAZ?</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="bar"></div>Scroll</div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="num" data-count="1200">0</div><div class="label">Member Aktif</div></div>
+    <div class="stat"><div class="num" data-count="18">0</div><div class="label">Trainer Bersertifikat</div></div>
+    <div class="stat"><div class="num" data-count="24">0</div><div class="label">Jam Akses Platinum</div></div>
+    <div class="stat"><div class="num" data-count="4">0</div><div class="label">Jalur Membership</div></div>
+  </div>
+</div>
+
+<section class="features" id="kenapa">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">Kenapa Kami</div>
+      <h2>Latihan Terarah, Bukan Asal Keringat</h2>
+      <p>Setiap sudut GYM FLAZ dirancang untuk satu hal: membuat progresmu terukur dan konsisten, apapun titik awalmu.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="feature-grid reveal">
+      <div class="feature">
+        <div class="fi">01</div>
+        <h3>Trainer Berpengalaman</h3>
+        <p>Tim pelatih bersertifikat yang paham cara membentuk program sesuai target tubuhmu, bukan template umum.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">02</div>
+        <h3>Alat Lengkap &amp; Terawat</h3>
+        <p>Free weight, machine, hingga area functional training — semua diperiksa rutin agar latihan tak pernah terganggu.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">03</div>
+        <h3>Progress Terukur</h3>
+        <p>Evaluasi berkala membantu kamu melihat perkembangan nyata, bukan sekadar rasa lelah setelah latihan.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">04</div>
+        <h3>Lingkungan Fokus</h3>
+        <p>Suasana studio yang tenang dan serius, dibangun untuk mereka yang datang dengan niat, bukan sekadar mampir.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">05</div>
+        <h3>Dukungan Prioritas</h3>
+        <p>Member level atas mendapat akses komunikasi langsung dengan trainer, kapan pun dibutuhkan.</p>
+      </div>
+      <div class="feature">
+        <div class="fi">06</div>
+        <h3>Fleksibel untuk Semua</h3>
+        <p>Dari yang baru mulai sampai atlet serius, empat jalur membership menyesuaikan tujuan dan anggaranmu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="paket" class="staircase-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">Paket Membership</div>
+      <h2>Pilih Level Perjuanganmu</h2>
+      <p>Empat jalur, satu arah: naik terus. Semakin tinggi levelmu, semakin dalam pendampingan yang kamu dapat.</p>
+    </div>
+
+    <div class="staircase reveal">
+      <div class="stair s1">Bronze</div>
+      <div class="stair s2">Silver</div>
+      <div class="stair s3">Gold</div>
+      <div class="stair s4">Platinum</div>
+    </div>
+
+    <div class="pricing-grid reveal">
+
+      <div class="plan">
+        <div class="plan-tier">Level 01</div>
+        <div class="plan-name">Bronze</div>
+        <div class="plan-tagline">Mulai langkah pertamamu</div>
+        <div class="plan-price"><span class="amt">Rp300k</span><span class="per">/bulan</span></div>
+        <ul>
+          <li><span class="tick">+</span>Akses gym reguler di jam operasional standar</li>
+          <li><span class="tick">+</span>Alat-alat gym dasar lengkap</li>
+          <li><span class="tick">+</span>Tanpa pendampingan trainer pribadi</li>
+          <li><span class="tick">+</span>Cocok untuk pemula yang baru memulai</li>
+        </ul>
+        <button class="plan-btn" onclick="goToDaftar('bronze')">Pilih Bronze</button>
+      </div>
+
+      <div class="plan">
+        <div class="plan-tier">Level 02</div>
+        <div class="plan-name">Silver</div>
+        <div class="plan-tagline">Bangun kebiasaan latihan</div>
+        <div class="plan-price"><span class="amt">Rp800k</span><span class="per">/bulan</span></div>
+        <ul>
+          <li><span class="tick">+</span>Akses gym tanpa batas jam operasional</li>
+          <li><span class="tick">+</span>Kelas grup (yoga, zumba, HIIT) 2x per minggu</li>
+          <li><span class="tick">+</span>Evaluasi progress bulanan</li>
+          <li><span class="tick">+</span>Akses loker &amp; shower premium</li>
+        </ul>
+        <button class="plan-btn" onclick="goToDaftar('silver')">Pilih Silver</button>
+      </div>
+
+      <div class="plan">
+        <div class="plan-tier">Level 03</div>
+        <div class="plan-name">Gold</div>
+        <div class="plan-tagline">Tingkatkan performa latihan</div>
+        <div class="plan-price"><span class="amt">Rp1.800k</span><span class="per">/bulan</span></div>
+        <ul>
+          <li><span class="tick">+</span>Personal trainer 3x per minggu</li>
+          <li><span class="tick">+</span>Akses unlimited seluruh alat gym</li>
+          <li><span class="tick">+</span>Program latihan terstruktur & terukur tiap bulan</li>
+          <li><span class="tick">+</span>Konsultasi nutrisi dasar bersama ahli gizi</li>
+        </ul>
+        <button class="plan-btn" onclick="goToDaftar('gold')">Pilih Gold</button>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-tier">Level 04</div>
+        <div class="plan-name">Platinum</div>
+        <div class="plan-tagline">Kuasai batas dirimu</div>
+        <div class="plan-price"><span class="amt">Rp2.800k</span><span class="per">/bulan</span></div>
+        <ul>
+          <li><span class="tick">+</span>Dilatih oleh trainer profesional berpengalaman</li>
+          <li><span class="tick">+</span>Pemakaian bebas alat gym unlimited</li>
+          <li><span class="tick">+</span>Diawasi ketat untuk pembentukan & fokus latihan yang diinginkan</li>
+          <li><span class="tick">+</span>Siap dihubungi 24 jam apabila terjadi sesuatu</li>
+        </ul>
+        <button class="plan-btn" onclick="goToDaftar('platinum')">Pilih Platinum</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="fasilitas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">Fasilitas</div>
+      <h2>Ruang yang Dibangun untuk Latihan Serius</h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gcell"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80" alt="Area free weight GYM FLAZ"></div>
+      <div class="gcell"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80" alt="Member sedang latihan angkat beban"></div>
+      <div class="gcell"><img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?auto=format&fit=crop&w=800&q=80" alt="Area machine training"></div>
+      <div class="gcell"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80" alt="Interior studio GYM FLAZ"></div>
+      <div class="gcell"><img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=800&q=80" alt="Rak dumbbell tertata rapi"></div>
+    </div>
+  </div>
+</section>
+
+<section id="testimoni">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">Testimoni</div>
+      <h2>Cerita dari Member Kami</h2>
+    </div>
+    <div class="testi-grid reveal">
+      <div class="testi">
+        <span class="quote">&ldquo;</span>
+        <p>Tiga bulan di paket Gold, program latihannya benar-benar terasa terstruktur. Progress jadi gampang dipantau tiap bulan.</p>
+        <div class="testi-person">
+          <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=100&q=80" alt="Foto member">
+          <div><div class="name">Rian A.</div><div class="role">Member Gold, 5 bulan</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <span class="quote">&ldquo;</span>
+        <p>Trainer Platinum bener-bener sat set ngawasin form latihan. Fokus otot yang aku mau kebentuk jadi lebih cepat kelihatan.</p>
+        <div class="testi-person">
+          <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=100&q=80" alt="Foto member">
+          <div><div class="name">Dinda S.</div><div class="role">Member Platinum, 8 bulan</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <span class="quote">&ldquo;</span>
+        <p>Baru mulai dari Bronze, alatnya lengkap dan suasananya nggak bikin minder. Enak buat pemula kayak aku.</p>
+        <div class="testi-person">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Foto member">
+          <div><div class="name">Fajar P.</div><div class="role">Member Bronze, 2 bulan</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap cta-inner reveal">
+    <h2>Siap Bentuk Versi Terbaik Dirimu?</h2>
+    <p>Pilih paket yang paling sesuai dengan tujuanmu, mulai latihan minggu ini juga.</p>
+    <a href="#" class="btn-primary" onclick="goToDaftar(); return false;">Gabung GYM FLAZ Sekarang</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">GYM <span>FLAZ</span></div>
+        <p class="desc">Studio kekuatan untuk mereka yang serius membentuk tubuh dan mengasah fokus, satu latihan pada satu waktu.</p>
+      </div>
+      <div class="fcol">
+        <h4>Jelajahi</h4>
+        <a href="#kenapa">Kenapa Kami</a>
+        <a href="#paket">Paket Membership</a>
+        <a href="#fasilitas">Fasilitas</a>
+        <a href="#testimoni">Testimoni</a>
+      </div>
+      <div class="fcol">
+        <h4>Kontak</h4>
+        <a href="#">0812-0000-0000</a>
+        <a href="#">hello@gymflaz.id</a>
+        <a href="#">Jakarta, Indonesia</a>
+      </div>
+      <div class="fcol">
+        <h4>Jam Operasional</h4>
+        <a href="#">Senin – Jumat: 05.00 – 23.00</a>
+        <a href="#">Sabtu – Minggu: 06.00 – 21.00</a>
+        <a href="#">Member Platinum: 24 Jam</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 GYM FLAZ. Seluruh hak cipta dilindungi.</span>
+      <span>Dibentuk dengan disiplin, bukan basa-basi.</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+<!-- ============= AKHIR HALAMAN LANDING ============= -->
+
+
+<!-- ================= HALAMAN 2: PENDAFTARAN ================= -->
+<div id="page-daftar">
+
+<header>
+  <nav>
+    <div class="logo">GYM <span>FLAZ</span></div>
+    <button class="back-link" onclick="goToLanding()">&larr; Kembali ke Beranda</button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="form-hero">
+    <div class="section-tag">Pendaftaran Member</div>
+    <h1>Satu Langkah Lagi Menuju Level Barumu</h1>
+    <p>Isi data di bawah ini. Tim GYM FLAZ akan menghubungimu lewat WhatsApp untuk konfirmasi jadwal dan pembayaran.</p>
+  </div>
+
+  <div class="progress">
+    <div class="p-step active"><div class="p-dot">1</div>Pilih Paket</div>
+    <div class="p-line"></div>
+    <div class="p-step active"><div class="p-dot">2</div>Data Diri</div>
+    <div class="p-line"></div>
+    <div class="p-step"><div class="p-dot">3</div>Konfirmasi</div>
+  </div>
+
+  <form class="form-layout" id="daftarForm">
+    <div>
+
+      <div class="field-block">
+        <h3><span class="num">1</span>Pilih Paket Membership</h3>
+        <div class="plan-picker" id="planPicker">
+          <div class="plan-card" data-plan="bronze">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 01</div>
+            <div class="pc-name">Bronze</div>
+            <div class="pc-price">Rp300k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="silver">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 02</div>
+            <div class="pc-name">Silver</div>
+            <div class="pc-price">Rp800k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="gold">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 03</div>
+            <div class="pc-name">Gold</div>
+            <div class="pc-price">Rp1.800k/bln</div>
+          </div>
+          <div class="plan-card" data-plan="platinum">
+            <div class="pc-check"></div>
+            <div class="pc-tier">Level 04</div>
+            <div class="pc-name">Platinum</div>
+            <div class="pc-price">Rp2.800k/bln</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <h3><span class="num">2</span>Data Diri</h3>
+
+        <div class="grid-2">
+          <div class="input-row">
+            <label for="nama">Nama Lengkap</label>
+            <input type="text" id="nama" placeholder="cth. Ade Fikri" required>
+          </div>
+          <div class="input-row">
+            <label for="tgl">Tanggal Lahir</label>
+            <input type="date" id="tgl" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="input-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="cth. nama@email.com" required>
+          </div>
+          <div class="input-row">
+            <label for="hp">Nomor WhatsApp</label>
+            <input type="tel" id="hp" placeholder="cth. 0812xxxxxxx" required>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label>Jenis Kelamin</label>
+          <div class="radio-row" id="genderRow">
+            <div class="radio-chip" data-gender="Pria">Pria</div>
+            <div class="radio-chip" data-gender="Wanita">Wanita</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <label for="mulai">Tanggal Mulai Latihan</label>
+          <input type="date" id="mulai" required>
+        </div>
+
+        <div class="input-row">
+          <label for="tujuan">Tujuan Latihan (opsional)</label>
+          <select id="tujuan">
+            <option value="">Pilih tujuan utamamu</option>
+            <option>Menurunkan berat badan</option>
+            <option>Membentuk otot</option>
+            <option>Meningkatkan stamina</option>
+            <option>Persiapan kompetisi</option>
+            <option>Sekadar menjaga kebugaran</option>
+          </select>
+        </div>
+
+        <div class="input-row">
+          <label for="catatan">Catatan Tambahan (opsional)</label>
+          <textarea id="catatan" placeholder="Riwayat cedera, jadwal yang diinginkan, atau hal lain yang perlu kami tahu"></textarea>
+        </div>
+      </div>
+
+      <div class="field-block">
+        <h3><span class="num">3</span>Metode Pembayaran</h3>
+        <div class="radio-row" id="paymentRow">
+          <div class="radio-chip" data-pay="Transfer Bank">Transfer Bank</div>
+          <div class="radio-chip" data-pay="QRIS">QRIS</div>
+          <div class="radio-chip" data-pay="Kartu Debit/Kredit">Kartu Debit/Kredit</div>
+          <div class="radio-chip" data-pay="Bayar di Tempat">Bayar di Tempat</div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Konfirmasi Pendaftaran</button>
+      <p class="fine-print">Dengan mendaftar, kamu setuju dihubungi tim GYM FLAZ melalui WhatsApp/Email untuk proses aktivasi membership.</p>
+    </div>
+
+    <aside class="summary">
+      <div class="summary-head">
+        <div class="s-tier" id="sumTier">Level 04</div>
+        <div class="s-name" id="sumName">Platinum</div>
+        <div class="s-tagline" id="sumTagline">Kuasai batas dirimu</div>
+      </div>
+      <div class="summary-body">
+        <div class="s-price-row">
+          <span class="s-amt" id="sumPrice">Rp2.800k</span>
+          <span class="s-per">/bulan</span>
+        </div>
+        <ul id="sumBenefits"></ul>
+        <div class="summary-note">Tagihan pertama diproses setelah tim kami mengonfirmasi jadwal onboarding via WhatsApp.</div>
+      </div>
+    </aside>
+  </form>
+</div>
+
+</div>
+<!-- ============= AKHIR HALAMAN PENDAFTARAN ============= -->
+
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6"/></svg>
+    </div>
+    <h2>Pendaftaran Berhasil!</h2>
+    <p>Terima kasih sudah bergabung dengan GYM FLAZ. Tim kami akan menghubungimu lewat WhatsApp dalam 1x24 jam untuk konfirmasi jadwal dan pembayaran.</p>
+    <div class="s-ref" id="refCode">Kode Referensi: GF-000000</div>
+    <div class="success-actions">
+      <button class="primary" onclick="closeSuccessAndGoHome()">Kembali ke Beranda</button>
+      <button class="ghost" onclick="closeSuccess()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ---------- Navigasi antar "halaman" dalam 1 file ---------- */
+  const pageLanding = document.getElementById('page-landing');
+  const pageDaftar = document.getElementById('page-daftar');
+
+  function goToDaftar(planKey){
+    pageLanding.style.display = 'none';
+    pageDaftar.style.display = 'block';
+    window.scrollTo(0,0);
+    selectPlan(plans[planKey] ? planKey : 'platinum');
+  }
+
+  function goToLanding(){
+    pageDaftar.style.display = 'none';
+    pageLanding.style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- Scroll reveal (halaman landing) ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  /* ---------- Animated counters ---------- */
+  const counters = document.querySelectorAll('.num[data-count]');
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.getAttribute('data-count'), 10);
+        let cur = 0;
+        const step = Math.max(1, Math.round(target / 50));
+        const tick = () => {
+          cur += step;
+          if(cur >= target){ el.textContent = target; return; }
+          el.textContent = cur;
+          requestAnimationFrame(tick);
+        };
+        tick();
+        counterIO.unobserve(el);
+      }
+    });
+  }, {threshold:0.5});
+  counters.forEach(el => counterIO.observe(el));
+
+  /* ---------- Halaman pendaftaran ---------- */
+  const plans = {
+    bronze:   { tier:'Level 01', name:'Bronze',   tagline:'Mulai langkah pertamamu', price:'Rp300k',
+      benefits:['Akses gym reguler di jam operasional standar','Alat-alat gym dasar lengkap','Tanpa pendampingan trainer pribadi','Cocok untuk pemula yang baru memulai'] },
+    silver:   { tier:'Level 02', name:'Silver',   tagline:'Bangun kebiasaan latihan', price:'Rp800k',
+      benefits:['Akses gym tanpa batas jam operasional','Kelas grup (yoga, zumba, HIIT) 2x per minggu','Evaluasi progress bulanan','Akses loker & shower premium'] },
+    gold:     { tier:'Level 03', name:'Gold',     tagline:'Tingkatkan performa latihan', price:'Rp1.800k',
+      benefits:['Personal trainer 3x per minggu','Akses unlimited seluruh alat gym','Program latihan terstruktur & terukur tiap bulan','Konsultasi nutrisi dasar bersama ahli gizi'] },
+    platinum: { tier:'Level 04', name:'Platinum', tagline:'Kuasai batas dirimu', price:'Rp2.800k',
+      benefits:['Dilatih oleh trainer profesional berpengalaman','Pemakaian bebas alat gym unlimited','Diawasi ketat untuk pembentukan & fokus latihan yang diinginkan','Siap dihubungi 24 jam apabila terjadi sesuatu'] }
+  };
+
+  const planCards = document.querySelectorAll('.plan-card');
+  const sumTier = document.getElementById('sumTier');
+  const sumName = document.getElementById('sumName');
+  const sumTagline = document.getElementById('sumTagline');
+  const sumPrice = document.getElementById('sumPrice');
+  const sumBenefits = document.getElementById('sumBenefits');
+
+  function renderSummary(key){
+    const p = plans[key];
+    [sumTier, sumName, sumTagline, sumPrice].forEach(el => el.style.opacity = 0);
+    setTimeout(() => {
+      sumTier.textContent = p.tier;
+      sumName.textContent = p.name;
+      sumTagline.textContent = p.tagline;
+      sumPrice.textContent = p.price;
+      sumBenefits.innerHTML = p.benefits.map(b => `<li><span class="tick">+</span>${b}</li>`).join('');
+      [sumTier, sumName, sumTagline, sumPrice].forEach(el => el.style.opacity = 1);
+    }, 120);
+  }
+
+  function selectPlan(key){
+    planCards.forEach(c => c.classList.toggle('selected', c.dataset.plan === key));
+    renderSummary(key);
+  }
+
+  planCards.forEach(card => {
+    card.addEventListener('click', () => selectPlan(card.dataset.plan));
+  });
+
+  function setupChipGroup(rowId){
+    const row = document.getElementById(rowId);
+    row.querySelectorAll('.radio-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        row.querySelectorAll('.radio-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      });
+    });
+  }
+  setupChipGroup('genderRow');
+  setupChipGroup('paymentRow');
+
+  const form = document.getElementById('daftarForm');
+  const overlay = document.getElementById('successOverlay');
+  const refCode = document.getElementById('refCode');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = 'GF-' + Math.floor(100000 + Math.random()*900000);
+    refCode.textContent = 'Kode Referensi: ' + code;
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeSuccess(){
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function closeSuccessAndGoHome(){
+    closeSuccess();
+    goToLanding();
+  }
+</script>
+
+</body>
+</html>
